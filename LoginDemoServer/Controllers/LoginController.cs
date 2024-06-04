@@ -4,6 +4,8 @@ using LoginDemoServer.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace LoginDemoServer.Controllers
@@ -83,6 +85,31 @@ namespace LoginDemoServer.Controllers
             }
 
         }
+
+        [Authorize]
+        [HttpGet("GetUserGrades")]
+        public ActionResult<UserDTO> GetUserGrades(string email)
+        {
+            var user = context.GetUserGrades(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userDTO = new UserDTO
+            {
+                Email = user.Email,
+                Grades = user.Grades.Select(g => new GradeDTO
+                {
+                    ExamDate = g.ExamDate,
+                    Subject = g.Subject,
+                    Score = g.Score
+                }).ToList()
+            };
+
+            return Ok(userDTO);
+        }
+
 
 
     }
