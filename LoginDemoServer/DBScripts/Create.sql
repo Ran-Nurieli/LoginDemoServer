@@ -17,8 +17,7 @@ Create Table Grades (
 FOREIGN KEY (Email) REFERENCES Users(Email),
 [Subject] nvarchar(100) NOT NULL,
 [Date] DATETIME NOT NULL,
-Grade int NOT NULL
-
+[Grade] int NOT NULL
 )
 Go
 

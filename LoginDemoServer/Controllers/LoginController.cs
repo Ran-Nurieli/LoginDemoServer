@@ -77,7 +77,7 @@ namespace LoginDemoServer.Controllers
                 //user is logged in - lets check who is the user
                 Models.Users modelsUser = context.GetUSerFromDB(userEmail);
              
-                return Ok(new DTO.Users(modelsUser));
+                return Ok(new DTO.UserDTO(modelsUser));
             }
             catch (Exception ex)
             {
@@ -86,29 +86,29 @@ namespace LoginDemoServer.Controllers
 
         }
 
-        [Authorize]
-        [HttpGet("GetUserGrades")]
-        public ActionResult<UserDTO> GetUserGrades(string email)
-        {
-            var user = context.GetUserGrades(email);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //[Authorize]
+        //[HttpGet("GetUserGrades")]
+        //public ActionResult<UserDTO> GetUserGrades(string email)
+        //{
+        //    var user = context.GetUserGrades(email);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var userDTO = new UserDTO
-            {
-                Email = user.Email,
-                Grades = user.Grades.Select(g => new GradeDTO
-                {
-                    ExamDate = g.ExamDate,
-                    Subject = g.Subject,
-                    Score = g.Score
-                }).ToList()
-            };
+        //    var userDTO = new UserDTO
+        //    {
+        //        Email = user.Email,
+        //        Grades = user.Grades.Select(g => new GradeDTO
+        //        {
+        //            ExamDate = g.ExamDate,
+        //            Subject = g.Subject,
+        //            Score = g.Score
+        //        }).ToList()
+        //    };
 
-            return Ok(userDTO);
-        }
+        //    return Ok(userDTO);
+        //}
 
 
 
